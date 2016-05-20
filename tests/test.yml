@@ -52,12 +52,20 @@
         option:
           - 'forwardfor'
           - 'httpchk HEAD / HTTP/1.1\r\nHost:localhost'
+        http_auth_userlist: userlist_name1
         cookie: true
         servers:
           - name: app1
             address: 127.0.0.1:8080
             options: 'cookie app1'
-          
+
+    userlists:
+      - name: userlist_name1
+        users:
+          - username: test
+            password_type: insecure-password
+            password: abc123
+
   roles:
     - ansible-role-haproxy
 
