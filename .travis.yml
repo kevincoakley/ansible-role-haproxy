@@ -36,7 +36,7 @@ script:
   - ansible-playbook -i tests/inventory -t haproxy tests/test.yml
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
-    ansible-playbook -i tests/inventory -t haproxy tests/$SITE
+    ansible-playbook -i tests/inventory -t haproxy tests/test.yml
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
