@@ -27,6 +27,7 @@ haproxy_backends:
     option:
       - 'forwardfor'
       - 'httpchk HEAD / HTTP/1.1\r\nHost:localhost'
+    http_auth_userlist: userlist_name1
     cookie: true
     # List of backend servers.
     servers: []
@@ -36,3 +37,10 @@ haproxy_backends:
     # - name: app2
     #   address: 192.168.0.2:80
     #   options: 'cookie app2 check'
+
+#userlists:
+#  - name: userlist_name1
+#    users:
+#      - username: test
+#       password_type: insecure-password
+#        password: abc123
