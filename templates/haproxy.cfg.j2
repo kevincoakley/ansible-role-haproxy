@@ -35,6 +35,15 @@ defaults
   errorfile 504 /etc/haproxy/errors/504.http
 {% endif %}
 
+{% if userlists is defined %}
+{% for userlist in userlists %}
+userlist {{ userlist.name }}
+{% for user in userlist.users %}
+    user {{ user.username }} {{ user.password_type }} {{ user.password }}
+{% endfor %}
+{% endfor %}
+{% endif %}
+
 {% for haproxy_frontend in haproxy_frontends %}
 frontend {{ haproxy_frontend.name }}
 {% for bind in haproxy_frontend.bind %}
@@ -64,6 +73,10 @@ backend {{ haproxy_backend.name }}
 {% for option in haproxy_backend.option %}
     option {{ option }}
 {% endfor %}
+{% endif %}
+{% if haproxy_backend.http_auth_userlist is defined %}
+    acl {{ haproxy_backend.http_auth_userlist }} http_auth({{ haproxy_backend.http_auth_userlist }})
+    http-request auth realm AuthRealm if !{{ haproxy_backend.http_auth_userlist }}
 {% endif %}
 {% if haproxy_backend.cookie | default(false) %}
     cookie SERVERID insert indirect
