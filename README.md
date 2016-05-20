@@ -59,6 +59,7 @@ HAProxy frontend configuration directives.
         option:
           - 'forwardfor'
           - 'httpchk HEAD / HTTP/1.1\r\nHost:localhost'
+        http_auth_userlist: first_userlist
         cookie: true
         servers:
           - name: app1
@@ -79,6 +80,15 @@ HAProxy frontend configuration directives.
 
 HAProxy backend configuration directives.
 
+    userlists:
+      - name: first_userlist
+        users:
+          - username: test
+            password_type: insecure-password
+            password: abc123
+
+User List configuration for HTTP Basic Auth
+
 ## Dependencies
 
 None.
@@ -86,14 +96,11 @@ None.
 ## Example Playbook
 
     - hosts: balancer
-      sudo: yes
+      become: yes
+      become_method: sudo
       roles:
         - { role: kevincoakley.haproxy }
 
 ## License
 
 MIT / BSD
-
-## Author Information
-
-This role was created in 2015 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).
