@@ -35,7 +35,7 @@
 - name: Copy SSL Certs to HAProxy server if SSL is enabled.
   copy: src={{ item.1.pem_local }} dest={{ item.1.pem_proxy }} owner=haproxy group=haproxy mode=0400
   with_subelements:
-     - haproxy_frontends 
+     - "{{ haproxy_frontends }}"
      - bind
   when: 
     - item.1.ssl is defined 
