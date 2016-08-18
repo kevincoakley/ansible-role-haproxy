@@ -28,7 +28,7 @@
 - name: Copy HAProxy configuration in place.
   template:
     src: haproxy.cfg.j2
-    dest: /etc/haproxy/haproxy.cfg
+    dest: "{{ haproxy_cfg_dest }}"
     mode: 0644
   notify: restart haproxy
 

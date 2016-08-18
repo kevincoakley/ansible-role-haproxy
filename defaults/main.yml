@@ -1,6 +1,7 @@
 ---
 haproxy_socket: /var/lib/haproxy/stats
 haproxy_chroot: /var/lib/haproxy
+haproxy_cfg_dest: /etc/haproxy/haproxy.cfg
 haproxy_user: haproxy
 haproxy_group: haproxy
 haproxy_connect_timeout: 5000
