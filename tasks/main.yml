@@ -27,6 +27,8 @@
     group: "{{ haproxy_group }}"
     mode: 0644
   notify: restart haproxy
+  tags:
+    - configuration
 
 - name: Copy SSL Certs to HAProxy server if SSL is enabled.
   copy:
