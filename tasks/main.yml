@@ -23,6 +23,8 @@
   template:
     src: haproxy.cfg.j2
     dest: "{{ haproxy_cfg_dest }}"
+    owner: "{{ haproxy_user }}"
+    group: "{{ haproxy_group }}"
     mode: 0644
   notify: restart haproxy
 
@@ -30,8 +32,8 @@
   copy:
     src: "{{ item.1.pem_local }}"
     dest: "{{ item.1.pem_proxy }}"
-    owner: haproxy 
-    group: haproxy
+    owner: "{{ haproxy_user }}"
+    group: "{{ haproxy_group }}"
     mode: 0400
   with_subelements:
      - "{{ haproxy_frontends }}"
