@@ -30,10 +30,8 @@ install:
 script:
   # Check the role/playbook's syntax.
   - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
-  # Start the docker containers.
-  - ansible-playbook -i tests/inventory -t docker-start tests/test.yml
   # Run the role/playbook with ansible-playbook.
-  - ansible-playbook -i tests/inventory -t haproxy tests/test.yml
+  - ansible-playbook -i tests/inventory --skip-tags=docker-stop tests/test.yml
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
     ansible-playbook -i tests/inventory -t haproxy tests/test.yml
