@@ -3,7 +3,11 @@
   apt:
     name: haproxy
     state: installed
-  when: ansible_os_family == 'Debian'
+  when:
+   - ansible_os_family == 'Debian'
+   - haproxy_cfg_only == False
+  tags:
+    - install
 
 - name: Ensure HAProxy is enabled (so init script will start it on Debian).
   lineinfile:
@@ -11,13 +15,21 @@
     regexp: "^ENABLED.+$"
     line: "ENABLED=1"
     state: present
-  when: ansible_os_family == 'Debian'
+  when:
+   - ansible_os_family == 'Debian'
+   - haproxy_cfg_only == False
+  tags:
+    - install
 
 - name: Ensure HAProxy is installed (RedHat).
   yum:
     name: haproxy
     state: installed
-  when: ansible_os_family == 'RedHat'
+  when:
+   - ansible_os_family == 'RedHat'
+   - haproxy_cfg_only == False
+  tags:
+    - install
 
 - name: Copy HAProxy configuration in place.
   template:
@@ -45,9 +57,15 @@
     - item.1.pem_local is defined 
     - item.1.pem_proxy is defined 
     - item.1.ssl 
+  tags:
+    - configuration
 
 - name: Ensure HAProxy is started and enabled on boot.
   service:
     name: "{{ haproxy_service_name }}"
     state: started
     enabled: yes
+  when:
+   - haproxy_cfg_only == False
+  tags:
+   - install

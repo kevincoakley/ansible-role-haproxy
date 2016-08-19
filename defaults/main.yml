@@ -5,6 +5,7 @@ haproxy_cfg_dest: /etc/haproxy/haproxy.cfg
 haproxy_user: haproxy
 haproxy_group: haproxy
 haproxy_service_name: haproxy
+haproxy_cfg_only: false
 haproxy_connect_timeout: 5000
 haproxy_client_timeout: 50000
 haproxy_server_timeout: 50000
