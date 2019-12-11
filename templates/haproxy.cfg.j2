@@ -4,7 +4,7 @@ global
   log /dev/log  local1 notice
 {% endif %}
 {% if haproxy_log_network %}
-log         {{ haproxy_log_network_host }} local2
+  log         {{ haproxy_log_network_host }} local2
 {% endif %}
 {% if haproxy_socket != '' %}
   stats socket {{ haproxy_socket }} level admin
