@@ -1,6 +1,6 @@
 # Ansible Role: HAProxy
 
-[![Build Status](https://travis-ci.org/kevincoakley/ansible-role-haproxy.svg)](https://travis-ci.org/kevincoakley/ansible-role-haproxy)
+![](https://github.com/kevincoakley/ansible-role-haproxy/workflows/Molecule%20Test/badge.svg)
 
 Installs HAProxy on RedHat/CentOS and Debian/Ubuntu Linux servers.
 
