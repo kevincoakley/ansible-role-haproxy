@@ -1,10 +1,9 @@
 ---
-- name: Ensure HAProxy is installed (Debian).
-  apt:
+- name: Ensure HAProxy is installed.
+  package:
     name: haproxy
-    state: installed
+    state: present
   when:
-    - ansible_os_family == 'Debian'
     - not haproxy_cfg_only
   tags:
     - install
@@ -17,16 +16,6 @@
     state: present
   when:
     - ansible_os_family == 'Debian'
-    - not haproxy_cfg_only
-  tags:
-    - install
-
-- name: Ensure HAProxy is installed (RedHat).
-  yum:
-    name: haproxy
-    state: installed
-  when:
-    - ansible_os_family == 'RedHat'
     - not haproxy_cfg_only
   tags:
     - install
