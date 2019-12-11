@@ -1,4 +1,7 @@
 ---
+haproxy_log_socket: true
+haproxy_log_network: false
+haproxy_log_network_host: 127.0.0.1
 haproxy_socket: /var/lib/haproxy/stats
 haproxy_chroot: /var/lib/haproxy
 haproxy_cfg_dest: /etc/haproxy/haproxy.cfg
@@ -9,6 +12,7 @@ haproxy_cfg_only: false
 haproxy_connect_timeout: 5000
 haproxy_client_timeout: 50000
 haproxy_server_timeout: 50000
+# haproxy_log_format: '%ci:%cp\ [%t]\ %ft\ %b/%s\ %Tq/%Tw/%Tc/%Tr/%Tt\ %ST\ %B\ %CC\ %CS\ %tsc\ %ac/%fc/%bc/%sc/%rc\ %sq/%bq\ %hr\ %hs\ %{+Q}r'
 
 # Frontend settings.
 haproxy_frontends:

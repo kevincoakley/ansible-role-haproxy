@@ -1,6 +1,11 @@
 global
+{% if haproxy_log_socket %}
   log /dev/log  local0
   log /dev/log  local1 notice
+{% endif %}
+{% if haproxy_log_network %}
+log         {{ haproxy_log_network_host }} local2
+{% endif %}
 {% if haproxy_socket != '' %}
   stats socket {{ haproxy_socket }} level admin
 {% endif %}
@@ -19,6 +24,9 @@ defaults
   timeout connect {{ haproxy_connect_timeout }}
   timeout client {{ haproxy_client_timeout }}
   timeout server {{ haproxy_server_timeout }}
+{% if haproxy_log_format is defined %}
+  log-format {{ haproxy_log_format }}
+{% endif %}
 
 {% if userlists is defined %}
 {% for userlist in userlists %}
