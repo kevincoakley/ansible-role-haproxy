@@ -1,11 +1,10 @@
 ---
-- name: Ensure HAProxy is installed (Debian).
-  apt:
+- name: Ensure HAProxy is installed.
+  package:
     name: haproxy
-    state: installed
+    state: present
   when:
-   - ansible_os_family == 'Debian'
-   - haproxy_cfg_only == False
+    - not haproxy_cfg_only
   tags:
     - install
 
@@ -16,18 +15,8 @@
     line: "ENABLED=1"
     state: present
   when:
-   - ansible_os_family == 'Debian'
-   - haproxy_cfg_only == False
-  tags:
-    - install
-
-- name: Ensure HAProxy is installed (RedHat).
-  yum:
-    name: haproxy
-    state: installed
-  when:
-   - ansible_os_family == 'RedHat'
-   - haproxy_cfg_only == False
+    - ansible_os_family == 'Debian'
+    - not haproxy_cfg_only
   tags:
     - install
 
@@ -50,13 +39,13 @@
     group: "{{ haproxy_group }}"
     mode: 0400
   with_subelements:
-     - "{{ haproxy_frontends }}"
-     - bind
-  when: 
-    - item.1.ssl is defined 
-    - item.1.pem_local is defined 
-    - item.1.pem_proxy is defined 
-    - item.1.ssl 
+    - "{{ haproxy_frontends }}"
+    - bind
+  when:
+    - item.1.ssl is defined
+    - item.1.pem_local is defined
+    - item.1.pem_proxy is defined
+    - item.1.ssl
   tags:
     - configuration
 
@@ -64,8 +53,8 @@
   service:
     name: "{{ haproxy_service_name }}"
     state: started
-    enabled: yes
+    enabled: true
   when:
-   - haproxy_cfg_only == False
+    - not haproxy_cfg_only
   tags:
-   - install
+    - install

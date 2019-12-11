@@ -1,0 +1,55 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    # Sockets and chroot aren't easy to use in Travis environments.
+    haproxy_socket: ''
+    haproxy_chroot: ''
+    haproxy_user: root
+    haproxy_group: root
+
+    haproxy_frontends:
+      - name: 'frontend'
+        bind:
+          - address: '*'
+            port: 80
+        mode: 'http'
+        backend_name: 'backend'
+
+    haproxy_backends:
+      - name: 'backend'
+        mode: 'http'
+        balance_method: 'roundrobin'
+        option:
+          - 'forwardfor'
+          - 'httpchk HEAD / HTTP/1.1\r\nHost:localhost'
+        http_auth_userlist: userlist_name1
+        cookie: true
+        servers:
+          - name: app1
+            address: 127.0.0.1:8080
+            options: 'cookie app1'
+
+    userlists:
+      - name: userlist_name1
+        users:
+          - username: test
+            password_type: insecure-password
+            password: abc123
+
+  roles:
+    - ansible-role-haproxy
+
+  post_tasks:
+    - name: Give the haproxy time to start
+      pause:
+        seconds: 5
+
+    - name: Verify that haproxy is running on port 80
+      uri:
+        url: http://127.0.0.1/
+        url_username: test
+        url_password: abc123
+        status_code: 503
