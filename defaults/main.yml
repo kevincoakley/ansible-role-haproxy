@@ -44,7 +44,7 @@ haproxy_backends:
     #   address: 192.168.0.2:80
     #   options: 'cookie app2 check'
 
-#userlists:
+# userlists:
 #  - name: userlist_name1
 #    users:
 #      - username: test
