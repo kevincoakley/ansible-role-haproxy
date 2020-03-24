@@ -55,6 +55,7 @@
     - item.1.pem_local is defined
     - item.1.pem_proxy is defined
     - item.1.ssl
+  notify: restart haproxy
   tags:
     - configuration
 
