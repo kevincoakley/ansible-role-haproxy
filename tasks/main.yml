@@ -1,4 +1,13 @@
 ---
+- name: Update apt-cache
+  apt:
+    update_cache: true
+  when:
+    - ansible_os_family == 'Debian'
+    - not haproxy_cfg_only
+  tags:
+    - install
+
 - name: Ensure HAProxy is installed.
   package:
     name: haproxy
@@ -46,6 +55,7 @@
     - item.1.pem_local is defined
     - item.1.pem_proxy is defined
     - item.1.ssl
+  notify: restart haproxy
   tags:
     - configuration
 
