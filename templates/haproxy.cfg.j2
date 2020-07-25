@@ -15,6 +15,19 @@ global
   user {{ haproxy_user }}
   group {{ haproxy_group }}
   daemon
+{% if haproxy_nbproc is defined %}
+  nbproc {{ haproxy_nbproc }}
+{% endif %}
+{% if haproxy_cpu_maps is defined %}
+{% for haproxy_cpu_map in haproxy_cpu_maps %}
+  cpu-map {{ haproxy_cpu_map.processes }} {{ haproxy_cpu_map.cpus }}
+{% endfor %}
+{% endif %}
+{% if haproxy_stats_sockets is defined %}
+{% for haproxy_stats_socket in haproxy_stats_sockets %}
+  stats socket {{ haproxy_stats_socket.param }}
+{% endfor %}
+{% endif %}
 
 defaults
   log global
