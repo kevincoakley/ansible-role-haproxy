@@ -68,6 +68,16 @@ frontend {{ haproxy_frontend.name }}
 {% endfor %}
 {% endif %}
     mode {{ haproxy_frontend.mode }}
+{% if haproxy_frontend.acl is defined %}
+{% for acl in haproxy_frontend.acl %}
+    acl {{ acl }}
+{% endfor %}
+{% endif %}
+{% if haproxy_frontend.use_backend is defined %}
+{% for use_backend in haproxy_frontend.use_backend %}
+    use_backend {{ use_backend }}
+{% endfor %}
+{% endif %}
     default_backend {{ haproxy_frontend.backend_name }}
 {% endfor %}
 

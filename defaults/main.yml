@@ -25,6 +25,8 @@ haproxy_frontends:
         pem_proxy: '/etc/ssl/certs/haproxy.pem'
     ssl_redirect: false
     option: []
+    acl: []
+    use_backend: []
     # - value: ''
     mode: 'http'
     backend_name: 'habackend'
