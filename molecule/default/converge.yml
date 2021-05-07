@@ -41,15 +41,3 @@
 
   roles:
     - ansible-role-haproxy
-
-  post_tasks:
-    - name: Give the haproxy time to start
-      pause:
-        seconds: 5
-
-    - name: Verify that haproxy is running on port 80
-      uri:
-        url: http://127.0.0.1/
-        url_username: test
-        url_password: abc123
-        status_code: 503
